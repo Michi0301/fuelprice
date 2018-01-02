@@ -6,9 +6,11 @@ const tankenEndpoint = "http://tanken.t-online.de/api/v1/search.xml";
 
 module.exports.TankenRequest = class TankenRequest {
 
-  constructor(tankenRequestParams) {
+  constructor(tankenRequestParams, handler) {
     this.tankenRequestParams = tankenRequestParams;
     this.request = unirest("POST", tankenEndpoint);
+
+    this.handler = handler
   }
 
   perform() {
@@ -19,12 +21,11 @@ module.exports.TankenRequest = class TankenRequest {
 
     this.request.form(this.tankenRequestParams.toForm());  
 
-    this.request.end(function (response) {
-      if (response.error) throw new Error(response.error);
+    this.request.end((response) => this.handleResponse(response))
+  }
 
-      parser.parseString(response.body, function (err, result) {
-        console.log(JSON.stringify(result));
-      });
-    });
+  handleResponse(response) {
+    if (response.error) throw new Error(response.error);
+    this.handler(response);
   }
 }
