@@ -4,7 +4,7 @@ var TankenRequestParams = require("./app/tanken_request_params.js").TankenReques
     Geocoder = require("./app/google_geocoder").GoogleGeocoder
 
 const location = "München",
-      radius = "1",
+      radius = "5",
       fuel = "super"
 
 
