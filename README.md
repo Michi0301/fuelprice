@@ -13,3 +13,9 @@ It utilizes the tankenapp api to look up gas stations in the specified location.
 ```
 npm start
 ```
+
+## Run tests
+
+```
+npm test
+```
