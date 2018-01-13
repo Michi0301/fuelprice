@@ -1,24 +1,26 @@
 var xml2js = require('xml2js'),
-    parser = new xml2js.Parser(),
-    xml2js = require('xml2js')
     Station = require("./station.js").Station;
     StationAddress = require("./station.js").StationAddress;
-    StationFuel = require("./station.js").StationFuel,
-    Cheapest = require("./finders/cheapest.js").Cheapest
+    StationFuel = require("./station.js").StationFuel
 
-module.exports.TankenRequestHandler = class TankenRequestHandler {
+module.exports.TankenRequestParser = class TankenRequestParser {
 
-  static logResponse(response) {
-    parser = new xml2js.Parser();
+  constructor(xml){
+    this.xml = xml;
+  }
 
-    parser.parseString(response.body, function (err, result) {
-      var rawGasStations = result["search"]["gasStations"];
+  getPromise() {
+    return new Promise((resolve, reject) => {
+      let parser = new xml2js.Parser();
 
-      var gasStations = TankenRequestHandler.buildGasStations(rawGasStations[0]["gasStation"]);
+      parser.parseString(this.xml, (err, result) => {
+        var rawGasStations = result["search"]["gasStations"];
 
-      var finder =  new Cheapest(gasStations);
-      console.log(finder.find());
-    });
+        var gasStations = TankenRequestParser.buildGasStations(rawGasStations[0]["gasStation"]);
+
+        resolve(gasStations);
+      });
+    });    
   }
 
   static buildGasStations(gasStationsParams) {

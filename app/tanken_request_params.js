@@ -1,10 +1,10 @@
 module.exports.TankenRequestParams = class TankenRequestParams {
 
-  constructor(latitude, longitude, radius, fuels) {
+  constructor(latitude, longitude, radius, fuel) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.radius = radius;
-    this.fuels = fuels;
+    this.fuel = fuel;
   }
 
   toForm() {
@@ -12,7 +12,7 @@ module.exports.TankenRequestParams = class TankenRequestParams {
       "lat": this.latitude,
       "lng": this.longitude,
       "radius": this.radius,
-      "fuels": this.fuels  
+      "fuels": this.fuel  
     }
   }
 }

@@ -4,7 +4,7 @@ var assert = require("assert");
 var TankenRequestParams = require("../app/tanken_request_params.js").TankenRequestParams;
 
 describe("tankenRequestParams", function() {
-  var params = new TankenRequestParams("latitude", "longitude", "radius", "fuels")
+  var params = new TankenRequestParams("latitude", "longitude", "radius", "fuel")
 
   describe("#toForm", function() {
     it("returns a form object", function() {
@@ -13,7 +13,7 @@ describe("tankenRequestParams", function() {
           "lat": "latitude",
           "lng": "longitude",
           "radius": "radius",
-          "fuels": "fuels"
+          "fuels": "fuel"
         }
       )
     });

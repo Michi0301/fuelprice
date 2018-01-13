@@ -1,16 +1,28 @@
-var TankenRequestParams = require("./app/tanken_request_params.js").TankenRequestParams;
-    TankenRequest = require("./app/tanken_request.js").TankenRequest,
-    TankenRequestHandler = require("./app/tanken_request_handler.js").TankenRequestHandler,
-    Geocoder = require("./app/google_geocoder").GoogleGeocoder
+const TankenRequestParams = require("./app/tanken_request_params.js").TankenRequestParams,
+      TankenRequestPromise = require("./app/tanken_request_promise.js").TankenRequestPromise,
+      Geocoder = require("./app/geocoder").Geocoder,
+      TankenRequestParser = require("./app/tanken_request_parser.js").TankenRequestParser;
+      Finder = require("./app/finders/cheapest.js").Cheapest;
 
 const location = "München",
       radius = "5",
-      fuel = "super"
+      fuel = "diesel"
 
+const geocoder = new Geocoder(location);
+const promise = geocoder.getPromse();
 
-var geocoder = new Geocoder(location, (latitude, longitude) => {
-  var params = new TankenRequestParams(latitude, longitude, radius, fuel);  
-  var request = new TankenRequest(params, TankenRequestHandler.logResponse);
+promise.then((result) => {
+  const latitude = result[0].latitude;
+  const longitude = result[0].longitude;
 
-  request.perform();
-}).lookup();
+  return { latitude: latitude, longitude: longitude }
+}).then((coordinates) => {
+
+  const params = new TankenRequestParams(coordinates.latitude, coordinates.longitude, radius, fuel);
+  
+  return new TankenRequestPromise(params).getPromise();
+}).then((tankenResonse) => {
+  return new TankenRequestParser(tankenResonse).getPromise();
+}).then((stations) => {
+  console.log(new Finder(stations).find());
+})
