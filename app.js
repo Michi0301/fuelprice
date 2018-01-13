@@ -8,21 +8,20 @@ const location = "München",
       radius = "5",
       fuel = "diesel"
 
-const geocoder = new Geocoder(location);
-const promise = geocoder.getPromse();
+const loctionPromise = new Geocoder(location).findLocation();
 
-promise.then((result) => {
+loctionPromise.then((result) => {
   const latitude = result[0].latitude;
   const longitude = result[0].longitude;
 
-  return { latitude: latitude, longitude: longitude }
+  return { latitude: latitude, longitude: longitude };
 }).then((coordinates) => {
 
   const params = new TankenRequestParams(coordinates.latitude, coordinates.longitude, radius, fuel);
   
   return new TankenRequestPromise(params).getPromise();
-}).then((tankenResonse) => {
-  return new TankenRequestParser(tankenResonse).getPromise();
+}).then((xml) => {
+  return new TankenRequestParser(xml).getPromise();
 }).then((stations) => {
   console.log(new Finder(stations).find());
 })

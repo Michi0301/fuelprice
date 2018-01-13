@@ -6,7 +6,7 @@ module.exports.Geocoder = class Geocoder {
     this.location = location;
   }
 
-  getPromse() {
+  findLocation() {
     var geocoder = Coder();
 
     return geocoder.geocode(this.location);
