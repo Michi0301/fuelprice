@@ -1,5 +1,4 @@
 module.exports.Station = class Station {
-
   constructor(brand, name, address, distance, fuel) {
     this.brand = brand;
     this.name = name;
@@ -10,7 +9,6 @@ module.exports.Station = class Station {
 }
 
 module.exports.StationAddress = class StationAddress {
-
   constructor(street, zip, city, lat, lng) {
     this.street = street;
     this.zip = zip;
@@ -21,7 +19,6 @@ module.exports.StationAddress = class StationAddress {
 }
 
 module.exports.StationFuel = class StationFuel {
-
   constructor(kind, price, timestamp) {
     this.kind = kind;
     this.price = price;

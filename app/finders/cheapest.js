@@ -4,21 +4,21 @@ module.exports.Cheapest = class Cheapest {
   }
 
   find() {
-    var sortedByPrice = this.stations.sort(Cheapest.sortByPrice);
-    var cheapestPrice = sortedByPrice[0].fuel.price;
+    let sortedByPrice = this.stations.sort(Cheapest.sortByPrice);
+    let cheapestPrice = sortedByPrice[0].fuel.price;
     
-    var ceapestStations = sortedByPrice.filter((station) => {
+    let ceapestStations = sortedByPrice.filter((station) => {
       return station.fuel.price == cheapestPrice;
     });
 
-    var sortedByDistance = ceapestStations.sort(Cheapest.sortByDistance);
+    let sortedByDistance = ceapestStations.sort(Cheapest.sortByDistance);
 
     return sortedByDistance[0];
   }
 
   static sortByPrice(a, b) {
-    var piceA = a.fuel.price;
-    var piceB = b.fuel.price; 
+    let piceA = a.fuel.price;
+    let piceB = b.fuel.price;
 
     if (piceA > piceB) {
       return 1;
@@ -27,10 +27,11 @@ module.exports.Cheapest = class Cheapest {
       return -1;
     }
     return 0;
+  };
 
-  };static sortByDistance(a, b) {
-    var distanceA = a.distance;
-    var distanceB = b.distance; 
+  static sortByDistance(a, b) {
+    let distanceA = a.distance;
+    let distanceB = b.distance;
 
     if (distanceA > distanceB) {
       return 1;
